@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const Blogs = () => {
+const AllSmoothies = () => {
     const [smoothies, setSmoothies] = useState([]);
     useEffect(() => {
         fetchSmoothies();
@@ -26,6 +26,7 @@ const Blogs = () => {
                 {smoothies.map((smoothie) => (
                     <div className='card'>
                         <h2>Name: {smoothie.name}</h2>
+
                         <br></br>
                     </div>
                 ))}
@@ -34,4 +35,4 @@ const Blogs = () => {
     );
 };
 
-export default Blogs;
+export default AllSmoothies;
