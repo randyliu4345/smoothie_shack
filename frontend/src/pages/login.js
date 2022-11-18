@@ -6,14 +6,13 @@ function Login() {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [userInfo, setUserInfo] = useState({});
-    const [login, setLogin] = useState(false);
+    
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("users");
         console.log("Users =")
         console.log(loggedInUser)
         if (loggedInUser) {
-            const foundUser = (loggedInUser);
             console.log(loggedInUser);
             console.log("HIN HERE");
             setUserInfo({ name: loggedInUser });
@@ -61,9 +60,9 @@ function Login() {
         console.log("USERNAME AND PASSWORD")
         // Compare user info
         if (typeof userInfo.user === 'undefined') { //we didnt find that user
-            setLogin(false);
+            
         } else if(userInfo.pass !== pass){ //if the real password is not the same
-            setLogin(false);
+            
         }
 
 
