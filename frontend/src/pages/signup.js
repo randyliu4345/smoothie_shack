@@ -8,7 +8,7 @@ const SignUp = () => {
     const [users, setUsers] = useState([]);
     
 
-    const sendUser = (inUser, inPass) => {
+    const sendUser = (inUser, inPass) => {   
         axios
             .post('http://localhost:5000/signUp', {user:inUser, pass:inPass})
             .then((res) => {
@@ -31,7 +31,7 @@ const SignUp = () => {
         console.log(loggedInUser)
         if (loggedInUser) {
             const foundUser = (loggedInUser);
-            console.log("HIN HERE")
+            console.log("HIN HERE");
             setUsers(foundUser);
         }
     }, []);

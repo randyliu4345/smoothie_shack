@@ -1,11 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import "./loginStyles.css";
 
 function Login() {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
+    const [login, setLogin] = useState(false);
 
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("users");
+        console.log("Users =")
+        console.log(loggedInUser)
+        if (loggedInUser) {
+            const foundUser = (loggedInUser);
+            console.log(loggedInUser);
+            console.log("HIN HERE");
+            setUserInfo({ name: loggedInUser });
+            console.log("Found user " + { loggedInUser});
+
+        }
+    }, []);
     const renderErrorMessage = (name) =>
         name === errorMessages.name && (
             <div className="error">{errorMessages.message}</div>
@@ -25,8 +40,33 @@ function Login() {
         // Find user login info
         const userData = [];
         //database.find((user) => user.username === uname.value);
+        axios
+            .get('http://localhost:5000/smoothie_shack/users')
+            .then((res) => {
+                console.log(res.data);
+                console.log(Array.from(res))
+                const item = Array.from(res.data).find(item => item.user === {uname})
+                console.log("NAME Below")
+                console.log(item.user);
+                console.log("NAME ABOVE")
+                setUserInfo({
+                    name: item.user,
+                    pass: item.pass
 
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        console.log("USERNAME AND PASSWORD")
         // Compare user info
+        if (typeof userInfo.user === 'undefined') { //we didnt find that user
+            setLogin(false);
+        } else if(userInfo.pass !== pass){ //if the real password is not the same
+            setLogin(false);
+        }
+
+
         if (userData) {
             if (userData.password !== pass.value) {
                 // Invalid password
@@ -39,6 +79,29 @@ function Login() {
             setErrorMessages({ name: "uname", message: errors.uname });
         }
     };
+    const handleLogout = () => {
+        setUserInfo([]);
+        localStorage.clear();
+        console.log("LOGOUT")
+        setIsSubmitted(false);
+        return (<div>
+            <div>You have successfully logged out</div>
+        </div >
+        )
+    };
+    console.log("USERRRRRRR");
+    console.log(userInfo.length);
+    console.log(userInfo);
+    if (userInfo && (userInfo !== null)&& (typeof userInfo.name !== 'undefined') && (userInfo.name.length !== 0)) {
+        return (
+            <div><div>{userInfo.name} is loggged in</div>
+                <button onClick={() => {
+                    handleLogout();
+
+                }}>logout</button>
+            </div>
+        );
+    }
     // JSX code for login form
     const renderForm = (
         <div className="form">
@@ -61,7 +124,7 @@ function Login() {
     );
 
     
-
+    
     return (
         <div className="app">
             <div className="login-form">
