@@ -12,26 +12,29 @@ const SignUp = () => {
         axios
             .post('http://localhost:5000/signUp', {user:inUser, pass:inPass})
             .then((res) => {
-                console.log(res);
-                setUsers(res.data);
+                console.log(inUser)
+                console.log(inPass);
+                console.log("DATA")
+                setUsers(inUser, inPass);
+                localStorage.setItem('users', inUser)
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
+    
     // User Login info
-    const database = [
-        {
-            username: "user1",
-            password: "pass1"
-        },
-        {
-            username: "user2",
-            password: "pass2"
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("users");
+        console.log("Users =")
+        console.log(loggedInUser)
+        if (loggedInUser) {
+            const foundUser = (loggedInUser);
+            console.log("HIN HERE")
+            setUsers(foundUser);
         }
-    ];
-
+    }, []);
     const errors = {
         uname: "username already taken"
     };
@@ -39,8 +42,9 @@ const SignUp = () => {
     const handleSubmit = (event) => {
         //Prevent page reload
         event.preventDefault();
-
+        
         var { uname, pass } = document.forms[0];
+
 
         // Find user login info
         sendUser(uname.value, pass.value);
@@ -52,6 +56,7 @@ const SignUp = () => {
             // Username not found
             setIsSubmitted(true);
         }
+        
     };
 
     // Generate JSX code for error message
@@ -60,6 +65,29 @@ const SignUp = () => {
             <div className="error">{errorMessages.message}</div>
         );
 
+    const handleLogout = () => {
+        setUsers(false);
+        localStorage.clear();
+        console.log("LOGOUT")
+        setIsSubmitted(false);
+        return (<div>
+            <div>You have successfully logged out</div>
+            </div >
+        )
+    };
+    // if there's a user show the message below
+    console.log("USER:")
+    console.log(users)
+    if (users && (users !== null) && (users.length !== 0)) {
+        return (
+            <div><div>{users} is loggged in</div>
+                <button onClick={() => {
+                    handleLogout();
+
+                }}>logout</button>
+            </div>
+        );
+    }
     // JSX code for login form
     const renderForm = (
         <div className="form">
@@ -80,7 +108,7 @@ const SignUp = () => {
             </form>
         </div>
     );
-
+            
     return (
         <div className="app">
             <div className="login-form">
