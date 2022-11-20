@@ -37,46 +37,61 @@ function Login() {
         var { uname, pass } = document.forms[0];
 
         // Find user login info
-        const userData = [];
         //database.find((user) => user.username === uname.value);
         axios
             .get('http://localhost:5000/smoothie_shack/users')
             .then((res) => {
-                console.log(res.data);
                 console.log(Array.from(res))
-                const item = Array.from(res.data).find(item => item.user === {uname})
+                const item = Array.from(res.data).find(item => item.user === uname.value)
+                /*
+                console.log(item)
                 console.log("NAME Below")
                 console.log(item.user);
-                console.log("NAME ABOVE")
+                console.log("Password they should have below:");
+                console.log(item.pass);
                 setUserInfo({
                     name: item.user,
                     pass: item.pass
 
-                });
+                });*/
+                console.log("type of user name");
+                console.log(typeof userInfo.name);
+                if (typeof item === 'undefined') { //we didnt find that user
+                    setErrorMessages({ name: "uname", message: errors.uname });
+                    console.log("UNDEFINED USERNAME");
+                    setIsSubmitted(false);
+                    setUserInfo({
+                        name: [],
+                        pass: []
+
+                    });
+                } else if (item.pass !== pass.value) { //if the real password is not the same
+                    setErrorMessages({ name: "pass", message: errors.pass });
+                    setIsSubmitted(false);
+                    setUserInfo({
+                        name: [],
+                        pass: []
+
+                    });
+                } else {
+                    localStorage.setItem('users', item.name);
+                    setIsSubmitted(true);
+                    setUserInfo({
+                        name: item.user,
+                        pass: item.pass
+
+                    });
+                    console.log("WE LOGGED IN");
+                }
             })
             .catch((err) => {
                 console.log(err);
+                
             });
-        console.log("USERNAME AND PASSWORD")
-        // Compare user info
-        if (typeof userInfo.user === 'undefined') { //we didnt find that user
-            
-        } else if(userInfo.pass !== pass){ //if the real password is not the same
-            
-        }
+        // Compare user info inside of handle submit
 
 
-        if (userData) {
-            if (userData.password !== pass.value) {
-                // Invalid password
-                setErrorMessages({ name: "pass", message: errors.pass });
-            } else {
-                setIsSubmitted(true);
-            }
-        } else {
-            // Username not found
-            setErrorMessages({ name: "uname", message: errors.uname });
-        }
+
     };
     const handleLogout = () => {
         setUserInfo([]);
@@ -88,9 +103,8 @@ function Login() {
         </div >
         )
     };
-    console.log("USERRRRRRR");
-    console.log(userInfo.length);
-    console.log(userInfo);
+
+
     if (userInfo && (userInfo !== null)&& (typeof userInfo.name !== 'undefined') && (userInfo.name.length !== 0)) {
         return (
             <div><div>{userInfo.name} is loggged in</div>

@@ -16,7 +16,7 @@ const SignUp = () => {
                 console.log(inPass);
                 console.log("DATA")
                 setUsers(inUser, inPass);
-                localStorage.setItem('users', inUser)
+                localStorage.setItem('users', inUser);
             })
             .catch((err) => {
                 console.log(err);
