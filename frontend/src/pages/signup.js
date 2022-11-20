@@ -16,7 +16,7 @@ const SignUp = () => {
                 console.log(inPass);
                 console.log("DATA")
                 setUsers(inUser, inPass);
-                localStorage.setItem('users', inUser);
+                localStorage.setItem('users', inUser)
             })
             .catch((err) => {
                 console.log(err);
@@ -31,7 +31,7 @@ const SignUp = () => {
         console.log(loggedInUser)
         if (loggedInUser) {
             const foundUser = (loggedInUser);
-            console.log("HIN HERE");
+            console.log("WE HAVE A USER ALREADY LOGGED IN!");
             setUsers(foundUser);
         }
     }, []);
@@ -46,16 +46,28 @@ const SignUp = () => {
         var { uname, pass } = document.forms[0];
 
 
-        // Find user login info
-        sendUser(uname.value, pass.value);
+        //Before we send, check if its already taken
+        axios
+            .get('http://localhost:5000/smoothie_shack/users')
+            .then((res) => {
+                console.log(Array.from(res))
+                const item = Array.from(res.data).find(item => item.user === uname.value)
+                if (typeof item !== 'undefined') { //we found that user
+                    setErrorMessages({ name: "uname", message: errors.uname });
+                    console.log("UNDEFINED USERNAME");
+                    setIsSubmitted(false);
+                    setErrorMessages({ name: "uname", message: errors.uname });
 
-        // Compare user info
-        if (0) {
-            setErrorMessages({ name: "uname", message: errors.uname });
-        } else {
-            // Username not found
-            setIsSubmitted(true);
-        }
+                } else { //we didnt find that user
+                    sendUser(uname.value, pass.value);
+                    setIsSubmitted(true);
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+
+            });
         
     };
 
@@ -76,8 +88,7 @@ const SignUp = () => {
         )
     };
     // if there's a user show the message below
-    console.log("USER:")
-    console.log(users)
+
     if (users && (users !== null) && (users.length !== 0)) {
         return (
             <div><div>{users} is loggged in</div>
