@@ -1,28 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 
 
 const AllSmoothies = () => {
+    const [smoothiesUnsorted, setSmoothiesUnsorted] = useState([]);
     const [smoothies, setSmoothies] = useState([]);
-    useEffect(() => {
-        fetchSmoothies();
-    }, []);
+    const [sortType, setSortType] = useState("name");
 
     const fetchSmoothies = () => {
         axios
             .get('http://localhost:5000/smoothie_shack')
             .then((res) => {               
                 console.log(res);
-                setSmoothies(res.data);
+                setSmoothiesUnsorted(res.data);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
+    useEffect(() => {
+        fetchSmoothies();
+      const sortArray = type => {
+        const types = {
+          name: 'name',
+          calories: 'calories',
+          protein: 'protein',
+        };
+        const sortProperty = types[type];
+        if(sortProperty === 'name'){
+            var sorted = [...smoothiesUnsorted].sort((a, b) => (a[sortProperty] < b[sortProperty] ? -1 : 1));
+        }else{
+            var sorted = [...smoothiesUnsorted].sort((a, b) => b[sortProperty] - a[sortProperty]);
+        }
+        setSmoothies(sorted);
+      };
+  
+      sortArray(sortType);
+    }); 
+    
     return (
         <>
-            <h1>You can write your blogs!</h1><div className='item-container'>
+            <h1>All our smoothies!</h1>
+            <br></br>
+            <h2>Sort</h2>
+            <select onChange={(e) => setSortType(e.target.value)}> 
+                    <option value="name">Name</option>
+                    <option value="calories">Calories</option>
+                    <option value="protein">Protein</option>
+            </select> 
+            
+            <div className='item-container'>
                 {smoothies.map((smoothie) => (
                     <div className='card'>
                         <h2>Name: {smoothie.name}</h2>
@@ -34,6 +62,8 @@ const AllSmoothies = () => {
                 ))}
             </div>
         </>
+    
+    
     );
 };
 
