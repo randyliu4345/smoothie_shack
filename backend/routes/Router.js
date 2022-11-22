@@ -11,7 +11,7 @@ const dbo = require('../db/smoothie_db');
 Router.route("/smoothie_shack").get(async function (req, res) {
   const dbConnect = dbo.getDb();
 
-  dbConnect
+  await dbConnect
     .collection("smoothies")
     .find({}).limit(50)
     .toArray(function (err, result) {
@@ -24,8 +24,7 @@ Router.route("/smoothie_shack").get(async function (req, res) {
 });
 Router.route("/smoothie_shack/users").get(async function (req, res) {
   const dbConnect = dbo.getDb();
-
-  dbConnect
+  await dbConnect
     .collection("users")
     .find({}).limit(50)
     .toArray(function (err, result) {
@@ -37,11 +36,49 @@ Router.route("/smoothie_shack/users").get(async function (req, res) {
     });
 });
 
+Router.route("/smoothie_shack/addFavorite").put(async function (req, res) {
+  const dbConnect = dbo.getDb();
+  const id = req.body.id;
+  const newfav = req.body.newfav;
+
+  console.log("Router " + id);
+  console.log("Router " + req.body.newfav);
+
+  try {
+    await dbConnect.collection("users").updateOne({user: id}, {$push : {fav : newfav}});
+  } catch (error)
+  {
+    console.log("Error updating user");
+  }
+
+});
+
+
+Router.route("/smoothie_shack/removeFavorite").put(async function (req, res) {
+  const dbConnect = dbo.getDb();
+  const id = req.body.id;
+  const newfav = req.body.newfav;
+
+  console.log("Router " + id);
+  console.log("Router " + req.body.newfav);
+
+  try {
+    await dbConnect.collection("users").updateOne({user: id}, {$pull : {fav : newfav}});
+    // console.log("Smoothie pushed");
+  } catch (error)
+  {
+    console.log("Error updating user");
+  }
+
+});
+
+
 Router.route("/signup").post(function (req, res) {
   const dbConnect = dbo.getDb();
   const userInfo = {
     user: req.body.user,
-    pass: req.body.pass
+    pass: req.body.pass,
+    fav: req.body.fav
   };
 
   dbConnect

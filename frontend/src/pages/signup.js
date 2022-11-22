@@ -10,7 +10,7 @@ const SignUp = () => {
 
     const sendUser = (inUser, inPass) => {   
         axios
-            .post('http://localhost:5000/signUp', {user:inUser, pass:inPass})
+            .post('http://localhost:5000/signUp', {user:inUser, pass:inPass, fav: []})
             .then((res) => {
                 console.log(inUser)
                 console.log(inPass);
