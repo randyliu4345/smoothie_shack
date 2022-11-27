@@ -22,6 +22,39 @@ Router.route("/smoothie_shack").get(async function (req, res) {
       }
     });
 });
+Router.route("/smoothie_shack/users").get(async function (req, res) {
+  const dbConnect = dbo.getDb();
+
+  dbConnect
+    .collection("users")
+    .find({}).limit(50)
+    .toArray(function (err, result) {
+      if (err) {
+        res.status(400).send("Error fetching users");
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+Router.route("/signup").post(function (req, res) {
+  const dbConnect = dbo.getDb();
+  const userInfo = {
+    user: req.body.user,
+    pass: req.body.pass
+  };
+
+  dbConnect
+    .collection("users")
+    .insertOne(userInfo, function (err, result) {
+      if (err) {
+        res.status(400).send("Error inserting user!");
+      } else {
+        console.log(`Added a new match with id ${result.insertedId}`);
+        res.status(204).send();
+      }
+    });
+});
 
 /*
 // This section will help you create a new document.
