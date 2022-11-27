@@ -7,6 +7,7 @@ const Router = express.Router();
 
 const dbo = require('../db/smoothie_db');
 
+
 // This section will help you get a list of all the documents.
 Router.route("/smoothie_shack").get(async function (req, res) {
   const dbConnect = dbo.getDb();
@@ -22,6 +23,22 @@ Router.route("/smoothie_shack").get(async function (req, res) {
       }
     });
 });
+
+Router.route("/smoothie_shack/:search").get(function (req, res) {
+  const db_connect = dbo.getDb();
+
+  const myquery = { 
+     $or: [ {name: new RegExp(req.params.search, 'i') }, { ingredients: new RegExp(req.params.search, 'i') } ] 
+  };
+
+  db_connect
+  .collection("smoothies")
+  .find(myquery).toArray(function (err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+ });
+
 Router.route("/smoothie_shack/users").get(async function (req, res) {
   const dbConnect = dbo.getDb();
 
