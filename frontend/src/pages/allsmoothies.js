@@ -5,7 +5,7 @@ import axios from 'axios';
 const AllSmoothies = () => {
     const [smoothiesUnsorted, setSmoothiesUnsorted] = useState([]);
     const [smoothies, setSmoothies] = useState([]);
-    const [sortType, setSortType] = useState("name");
+    const [sortType, setSortType] = useState("");
 
     const fetchSmoothies = () => {
         axios
@@ -45,7 +45,7 @@ const AllSmoothies = () => {
             <br></br>
             <h2>Sort</h2>
             <select onChange={(e) => setSortType(e.target.value)}> 
-                <option value="name">Select Sort Type</option>
+                <option value={sortType}>Select Sort Type</option>
                 <option value="name">Name</option>
                 <option value="calories">Calories</option>
                 <option value="protein">Protein</option>
