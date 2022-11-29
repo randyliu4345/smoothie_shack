@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './generalStyles.css'
 
 const Home = () => {
     const [smoothies, setSmoothies] = useState([]);
@@ -45,7 +46,9 @@ const Home = () => {
                     </div>
                 )) : null}
             </div>
+            
         </>
+        
     );
 };
 

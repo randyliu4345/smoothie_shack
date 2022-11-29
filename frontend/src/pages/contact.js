@@ -4,9 +4,9 @@ const Contact = () => {
     console.log("CONTACT US PAGE, USERS is :")
     console.log(localStorage.users);
     return (
-        <div>
-            <h1>Mail us on feedback@geeksforgeeks.org</h1>
-            <div>{localStorage.users} is signed in btw</div>
+        <div className = "login-form">
+            <h1 color="red">Mail us on jacoblevinson111@gmail.com</h1>
+            
         </div>
     );
 };
