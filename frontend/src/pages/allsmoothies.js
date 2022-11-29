@@ -37,7 +37,7 @@ const AllSmoothies = () => {
       };
   
       sortArray(sortType);
-    }); 
+    },[]); 
     
     return (
         <>
