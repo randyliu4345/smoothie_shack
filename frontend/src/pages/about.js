@@ -1,8 +1,9 @@
 import React from "react";
-
+import './about.css'
 const About = () => {
     return (
-        <div>
+        <div className = "card2">
+            
             <h1>
                 Welcome to Randy's Smoothie Shack! <br></br>
                 Here's some info about our site.
@@ -20,3 +21,4 @@ const About = () => {
 };
 
 export default About;
+
