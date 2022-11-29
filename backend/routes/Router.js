@@ -23,6 +23,7 @@ Router.route("/smoothie_shack").get(async function (req, res) {
     });
 });
 Router.route("/smoothie_shack/users").get(async function (req, res) {
+  // console.log("get users called in router")
   const dbConnect = dbo.getDb();
   await dbConnect
     .collection("users")
@@ -37,14 +38,16 @@ Router.route("/smoothie_shack/users").get(async function (req, res) {
 });
 
 Router.route("/smoothie_shack/addFavorite").put(async function (req, res) {
+  console.log("Router addFavorite called")
   const dbConnect = dbo.getDb();
   const id = req.body.id;
   const newfav = req.body.newfav;
 
-  console.log("Router " + id);
-  console.log("Router " + req.body.newfav);
+  // console.log("Router " + id);
+  // console.log("Router " + req.body.newfav);
 
   try {
+    console.log("Inside push statement")
     await dbConnect.collection("users").updateOne({user: id}, {$push : {fav : newfav}});
   } catch (error)
   {

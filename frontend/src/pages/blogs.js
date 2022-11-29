@@ -4,13 +4,7 @@ import axios from 'axios';
 
 const Blogs = () => {
     const [smoothies, setSmoothies] = useState([]);
-    const [favorites, setFavorites] = useState([]);
     const [userid, setUserid] = useState("");
-
-    useEffect(() => {
-        setFavorites(favorites);
-        console.log(favorites);
-    }, [favorites]);
     
     useEffect(() => {
         fetchSmoothies();
@@ -22,6 +16,7 @@ const Blogs = () => {
         if (loggedInUser) {
             setUserid(loggedInUser);
         }
+        console.log("Called from useeffect: " + userid)
     }, [userid]);
 
     
@@ -38,33 +33,77 @@ const Blogs = () => {
             });
     };
 
-    const addFavorite = (smoothieName) => {
-        // console.log(smoothieID);
-        const loggedInUser = localStorage.getItem("users");
-        // find loggedInUser in database
-        axios
-            .get('http://localhost:5000/smoothie_shack/users')
-            .then((res) => {
+    const addOrRemoveFavorite = async(smoothieName) => {
 
-                // get user data
-                const item = Array.from(res.data).find(item => item.user === loggedInUser)
-                console.log(item);
-                // add smoothieID to list of favorites
+        var smoothie_button = document.getElementById(smoothieName);
+        // console.log(smoothie_button.innerHTML);
+        if (smoothie_button.innerHTML === "Add favorite")
+        {
+            // const loggedInUser = localStorage.getItem("users");
 
-                setUserid(item.user);
+            console.log("add called")
+            axios
+            .put('http://localhost:5000/smoothie_shack/addFavorite', {id: userid, newfav: smoothieName})
+            .then(function (res) {
+                console.log("Res: " + res);
             })
             .catch((err) => {
                 console.log(err);
             });
+            smoothie_button.innerHTML = "Remove favorite";
+
+            
+
+            // console.log("before getting user data")
+            // await axios
+            // .get('http://localhost:5000/smoothie_shack/users')
+            // .then((res) => {
+                
+            //     // get user data
+            //     const item = Array.from(res.data).find(item => item.user === loggedInUser)
+            //     console.log(item);
+            //     // add smoothieID to list of favorites
+            //     setUserid(item.user);
 
 
-        // console.log("putting: " + favorites);
-        axios
-            .put('http://localhost:5000/smoothie_shack/addFavorite', {id: userid, newfav: smoothieName})
-            .then((res) => {})
+
+            //     // smoothie_button.innerHTML = "Remove favorite";
+
+                
+            //     // console.log("before sending favorite")
+            //     return axios
+            //     .put('http://localhost:5000/smoothie_shack/addFavorite', {id: userid, newfav: smoothieName})
+                
+            // })
+            // .then((res) => {
+            //     console.log("add favorite request sent" + res);
+            // })
+            // .catch((err) => {
+            //     console.log(err);
+            // });
+
+            // console.log("After getting user data: " + userid);
+
+            // console.log("putting: " + favorites);
+
+        }
+
+        else // smoothie_button.innerHTML === "Remove favorite"
+        {
+            console.log("removed called")
+            axios
+            .put('http://localhost:5000/smoothie_shack/removeFavorite', {id: userid, newfav: smoothieName})
+            .then(function (res) {
+                console.log("Res: " + res);
+            })
             .catch((err) => {
                 console.log(err);
             });
+            smoothie_button.innerHTML = "Add favorite";
+        }
+
+        
+
     }
 
     return (
@@ -72,7 +111,7 @@ const Blogs = () => {
             <h1>You can write your blogs!</h1><div className='item-container'>
                 {smoothies.map((smoothie) => (
                     <div className='card'>
-                        <h3> <button onClick={() => {addFavorite(smoothie.name);}}>Add favorite </button> {smoothie.name} </h3>
+                        <h3> <button id={smoothie.name} onClick={() => {addOrRemoveFavorite(smoothie.name);}}>Add favorite</button> {smoothie.name} </h3>
                     </div>
                 ))}
                 
