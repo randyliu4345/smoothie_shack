@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
@@ -21,23 +21,23 @@ const AllSmoothies = () => {
 
     useEffect(() => {
         fetchSmoothies();
-      const sortArray = type => {
-        const types = {
-          name: 'name',
-          calories: 'calories',
-          protein: 'protein',
+        const sortArray = type => {
+            const types = {
+            name: 'name',
+            calories: 'calories',
+            protein: 'protein',
+            };
+            const sortProperty = types[type];
+            if(sortProperty === 'name'){
+                var sorted = [...smoothiesUnsorted].sort((a, b) => (a[sortProperty] < b[sortProperty] ? -1 : 1));
+            }else{
+                sorted = [...smoothiesUnsorted].sort((a, b) => b[sortProperty] - a[sortProperty]);
+            }
+            setSmoothies(sorted);
         };
-        const sortProperty = types[type];
-        if(sortProperty === 'name'){
-            var sorted = [...smoothiesUnsorted].sort((a, b) => (a[sortProperty] < b[sortProperty] ? -1 : 1));
-        }else{
-            var sorted = [...smoothiesUnsorted].sort((a, b) => b[sortProperty] - a[sortProperty]);
-        }
-        setSmoothies(sorted);
-      };
-  
-      sortArray(sortType);
-    }); 
+    
+        sortArray(sortType);
+    },[sortType]); 
     
     return (
         <>
@@ -45,9 +45,10 @@ const AllSmoothies = () => {
             <br></br>
             <h2>Sort</h2>
             <select onChange={(e) => setSortType(e.target.value)}> 
-                    <option value="name">Name</option>
-                    <option value="calories">Calories</option>
-                    <option value="protein">Protein</option>
+                <option value="name">Select Sort Type</option>
+                <option value="name">Name</option>
+                <option value="calories">Calories</option>
+                <option value="protein">Protein</option>
             </select> 
             
             <div className='item-container'>
