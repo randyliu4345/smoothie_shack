@@ -39,7 +39,7 @@ function Login() {
         // Find user login info
         //database.find((user) => user.username === uname.value);
         axios
-            .get('http://localhost:5000/smoothie_shack/users')
+            .get('http://localhost:5000/users')
             .then((res) => {
                 console.log(Array.from(res))
                 const item = Array.from(res.data).find(item => item.user === uname.value)

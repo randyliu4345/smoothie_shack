@@ -4,13 +4,13 @@ import './generalStyles.css'
 
 const Home = () => {
     const [smoothies, setSmoothies] = useState([]);
-    const [query, setQuery] = useState("")
+    const [query, setQuery] = useState(" ")
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await axios.get(`http://localhost:5000/smoothie_shack/find/${query}`)
+                const data = await axios.get(`http://localhost:5000/smoothie_shack/${query}`)
                 setSmoothies(data.data)
             } catch (error) {
                 console.error(error)
