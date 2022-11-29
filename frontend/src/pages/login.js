@@ -74,7 +74,7 @@ function Login() {
 
                     });
                 } else {
-                    localStorage.setItem('users', item.name);
+                    localStorage.setItem('users', item.user);
                     setIsSubmitted(true);
                     setUserInfo({
                         name: item.user,
