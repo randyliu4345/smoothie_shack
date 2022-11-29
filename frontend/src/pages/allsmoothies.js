@@ -26,12 +26,16 @@ const AllSmoothies = () => {
             name: 'name',
             calories: 'calories',
             protein: 'protein',
+            rcalories: 'calories',
+            rprotein: 'protein'
             };
             const sortProperty = types[type];
             if(sortProperty === 'name'){
                 var sorted = [...smoothiesUnsorted].sort((a, b) => (a[sortProperty] < b[sortProperty] ? -1 : 1));
-            }else{
+            }else if(type === 'calories' | type === 'protein'){
                 sorted = [...smoothiesUnsorted].sort((a, b) => b[sortProperty] - a[sortProperty]);
+            }else{
+                sorted = [...smoothiesUnsorted].sort((a, b) => a[sortProperty] - b[sortProperty]);
             }
             setSmoothies(sorted);
         };
@@ -47,8 +51,10 @@ const AllSmoothies = () => {
             <select onChange={(e) => setSortType(e.target.value)}> 
                 <option value={sortType}>Select Sort Type</option>
                 <option value="name">Name</option>
-                <option value="calories">Calories</option>
-                <option value="protein">Protein</option>
+                <option value="calories">Calories (High to Low)</option>
+                <option value="rcalories">Calories (Low to High)</option>
+                <option value="protein">Protein (High to Low)</option>
+                <option value="rprotein">Protein (Low to High)</option>
             </select> 
             
             <div className='item-container'>
