@@ -3,9 +3,10 @@
     width: 30%;
     display: flex;
     flex-direction: column;
-    border: 1px red solid;
+    border: 3px red solid;
     width: 80%;
     border-radius: 10px;
+    background-color: #F4FEEE
 }
 /* On mouse-over, add a deeper shadow */
 .card:hover {
@@ -38,4 +39,8 @@
 }
 .container {
     padding: 2px 16px;
+}
+
+body{
+    margin: 8px;
 }

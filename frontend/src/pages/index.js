@@ -38,11 +38,13 @@ const Home = () => {
                 ?
                 smoothies.map((smoothie) => (
                     <div className='card'>
-                        <h2>Name: {smoothie.name}</h2>
+                        <body>
+                        <h2 >Name: {smoothie.name}</h2>
                         <h3>Ingredients: {smoothie.ingredients}</h3>
                         <h3>Calories: {smoothie.calories}</h3>
                         <h3>Protein(g): {smoothie.protein}</h3>
-                        <br></br>
+                            <br></br>
+                        </body>
                     </div>
                 )) : null}
             </div>
