@@ -34,7 +34,10 @@ input[type="submit"]:hover {
     display: flex;
     justify-content: center;
 }
-
+/* body {
+background-color: rgb(206, 255, 206);
+  color: rgb(2, 2, 128);
+} */
 .login-form {
     background-color: white;
     padding: 2rem;
@@ -61,3 +64,5 @@ input[type="submit"]:hover {
     gap: 8px;
     margin: 10px;
 }
+
+

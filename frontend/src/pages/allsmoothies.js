@@ -35,9 +35,9 @@ const AllSmoothies = () => {
             }
             setSmoothies(sorted);
         };
-    
         sortArray(sortType);
     },[sortType]); 
+
     
     return (
         <>

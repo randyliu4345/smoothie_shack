@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './generalStyles.css'
 
 const Home = () => {
     const [smoothies, setSmoothies] = useState([]);
@@ -37,15 +38,19 @@ const Home = () => {
                 ?
                 smoothies.map((smoothie) => (
                     <div className='card'>
+                        <body>
                         <h2>Name: {smoothie.name}</h2>
                         <h3>Ingredients: {smoothie.ingredients}</h3>
                         <h3>Calories: {smoothie.calories}</h3>
                         <h3>Protein(g): {smoothie.protein}</h3>
-                        <br></br>
+                            <br></br>
+                        </body>
                     </div>
                 )) : null}
             </div>
+            
         </>
+        
     );
 };
 
