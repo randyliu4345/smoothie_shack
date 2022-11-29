@@ -37,43 +37,84 @@ Router.route("/smoothie_shack/users").get(async function (req, res) {
     });
 });
 
-Router.route("/smoothie_shack/addFavorite").put(async function (req, res) {
-  console.log("Router addFavorite called")
+Router.route("/smoothie_shack/addFavorite").put((req, res) => {
   const dbConnect = dbo.getDb();
   const id = req.body.id;
-  const newfav = req.body.newfav;
+  const fav = req.body.fav;
 
-  // console.log("Router " + id);
-  // console.log("Router " + req.body.newfav);
+  dbConnect.collection("users").updateOne({user: id}, {$push : {fav : fav}},
+    (error, data) => {
+      if (error)
+      {
+        console.log(error);
+      }
+      else
+      {
+        res.json(data);
+        console.log("Favorite added successfully")
+      }
+    });
+});
+
+
+Router.route("/smoothie_shack/removeFavorite").put((req, res) => {
+  const dbConnect = dbo.getDb();
+  const id = req.body.id;
+  const fav = req.body.fav;
+
+  dbConnect.collection("users").updateOne({user: id}, {$pull : {fav : fav}},
+    (error, data) => {
+      if (error)
+      {
+        console.log(error);
+      }
+      else
+      {
+        res.json(data);
+        console.log("Favorite removed successfully")
+      }
+    });
+});
+
+
+
+Router.route("/smoothie_shack/updateSmoothieFreq").put((req, res) => {
+  const dbConnect = dbo.getDb();
+  const smoothie = req.body.smoothie;
+  const count = req.body.count;
+
+  dbConnect.collection("smoothies").updateOne({name : smoothie}, {$inc : {frequency : count}},
+    (error, data) => {
+      if (error)
+      {
+        console.log(error);
+      }
+      else
+      {
+        res.json(data);
+        console.log("Smoothie frequency updated by " + count + " successfully")
+      }
+    });
+});
+
+
+
+Router.route("/smoothie_shack/updateSmoothieFreq").put(async function (req, res) {
+  const dbConnect = dbo.getDb();
+  const smoothie = req.body.smoothie;
+  const count = req.body.count;
+
+  console.log("Router: update smoothie freq called");
 
   try {
-    console.log("Inside push statement")
-    await dbConnect.collection("users").updateOne({user: id}, {$push : {fav : newfav}});
+    await dbConnect.collection("smoothies").updateOne({name: smoothie}, {$inc : {frequency : count}});
   } catch (error)
   {
-    console.log("Error updating user");
+    console.log("Error updating smoothie frequency")
   }
 
 });
 
-
-Router.route("/smoothie_shack/removeFavorite").put(async function (req, res) {
-  const dbConnect = dbo.getDb();
-  const id = req.body.id;
-  const newfav = req.body.newfav;
-
-  console.log("Router " + id);
-  console.log("Router " + req.body.newfav);
-
-  try {
-    await dbConnect.collection("users").updateOne({user: id}, {$pull : {fav : newfav}});
-    // console.log("Smoothie pushed");
-  } catch (error)
-  {
-    console.log("Error updating user");
-  }
-
-});
 
 
 Router.route("/signup").post(function (req, res) {
