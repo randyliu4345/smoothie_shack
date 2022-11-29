@@ -1,4 +1,4 @@
-npx create-react-app ./
+After cloning the repository:
 
 In frontend: 
 npm install
