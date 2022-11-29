@@ -10,7 +10,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await axios.get(`http://localhost:5000/smoothie_shack/${query}`)
+                const data = await axios.get(`http://localhost:5000/smoothie_shack/find/${query}`)
                 setSmoothies(data.data)
             } catch (error) {
                 console.error(error)

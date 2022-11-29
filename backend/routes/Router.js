@@ -24,7 +24,7 @@ Router.route("/smoothie_shack").get(async function (req, res) {
     });
 });
 
-Router.route("/smoothie_shack/:search").get(function (req, res) {
+Router.route("/smoothie_shack/find/:search").get(function (req, res) {
   const db_connect = dbo.getDb();
 
   const myquery = { 
