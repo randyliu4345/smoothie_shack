@@ -9,7 +9,7 @@ const dbo = require('../db/smoothie_db');
 
 
 // This section will help you get a list of all the documents.
-Router.route("/smoothie_shack").get(async function (req, res) {
+Router.route("/smoothie_shack/").get(async function (req, res) {
   const dbConnect = dbo.getDb();
 
   await dbConnect
@@ -24,7 +24,7 @@ Router.route("/smoothie_shack").get(async function (req, res) {
     });
 });
 
-Router.route("/smoothie_shack/find/:search").get(function (req, res) {
+Router.route("/smoothie_shack/:search").get(function (req, res) {
   const db_connect = dbo.getDb();
 
   const myquery = { 
@@ -39,8 +39,7 @@ Router.route("/smoothie_shack/find/:search").get(function (req, res) {
   });
  });
 
-Router.route("/smoothie_shack/users").get(async function (req, res) {
-  // console.log("get users called in router")
+Router.route("/users").get(async function (req, res) {
   const dbConnect = dbo.getDb();
   await dbConnect
     .collection("users")
