@@ -7,14 +7,9 @@ const Navbar = () => {
     <>
       <Nav>
         <NavMenu>
+        <h1>Randy's Smoothie Shack&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
           <NavLink to="/" activeStyle>
             Home
-          </NavLink>
-          <NavLink to="/about" activeStyle>
-            About
-          </NavLink>
-          <NavLink to="/contact" activeStyle>
-            Contact Us
           </NavLink>
           <NavLink to="/blogs" activeStyle>
             Blogs
@@ -22,11 +17,18 @@ const Navbar = () => {
           <NavLink to="/allSmoothies" activeStyle>
             All Smoothies
           </NavLink>
-          <NavLink to="/sign-up" activeStyle>
-            Sign Up
+          <NavLink to="/about" activeStyle>
+            About
           </NavLink>
+          <NavLink to="/contact" activeStyle>
+            Contact Us
+          </NavLink>
+          <h1>&emsp;&emsp;&emsp;&emsp;</h1>
           <NavLink to="/login" activeStyle>
             Login
+          </NavLink>
+          <NavLink to="/sign-up" activeStyle>
+            Sign Up
           </NavLink>
         </NavMenu>
       </Nav>
