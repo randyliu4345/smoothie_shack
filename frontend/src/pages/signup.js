@@ -91,7 +91,7 @@ const SignUp = () => {
 
     if (users && (users !== null) && (users.length !== 0)) {
         return (
-            <div><div className="card"><body>{users} is loggged in!</body></div>
+            <div><div className="card"><body>{users} is logged in!</body></div>
                 <button onClick={() => {
                     handleLogout();
 
