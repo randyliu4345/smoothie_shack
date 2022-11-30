@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from 'axios';
 import './addsmoothies.css'
 
 const AddSmoothies = () => {
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const sendSmoothie = (inName, inIngredients, inCalories, inProtein) => {   
         axios
@@ -23,7 +25,7 @@ const AddSmoothies = () => {
 
     const handleSubmit = (event) => {
         //Prevent page reload
-        //event.preventDefault();
+        event.preventDefault();
         
         var { smoothiename, ingredients, caloriecount, proteincount } = document.forms[0];
 
@@ -54,13 +56,15 @@ const AddSmoothies = () => {
             */
 
         sendSmoothie(smoothiename.value, ingredients.value, parseFloat(caloriecount.value), parseFloat(proteincount.value));
+        document.getElementById("smoothieForm").reset();
+        setIsSubmitted(true);
 
         
     };
 
     const renderForm = (
         <div className="form">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id="smoothieForm">
                 <div className="input-container">
                     <label>Name of Smoothie </label>
                     <input type="text" name="smoothiename" required />
@@ -97,6 +101,10 @@ const AddSmoothies = () => {
             </p>
 
             {renderForm}
+
+            <br></br>
+            
+            {isSubmitted ? <p style={{color:"MediumSeaGreen"}}>Your smoothie was successfully submitted. Go check it out!</p> : ""}
 
             <br></br>
         </div>
