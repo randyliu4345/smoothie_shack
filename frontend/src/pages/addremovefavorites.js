@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const AddRemoveFavorites = () => {
-    const [smoothies, setSmoothies] = useState({});
+    const [smoothies_states, setSmoothieStates] = useState({});
     const [userid, setUserid] = useState("");
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const AddRemoveFavorites = () => {
                     smoothiesMap[fav] = true;
                 })
                 // console.log(smoothiesMap)
-                setSmoothies(smoothiesMap);
+                setSmoothieStates(smoothiesMap);
             })
             .catch((err) => {
                 console.log(err);
@@ -95,9 +95,9 @@ const AddRemoveFavorites = () => {
     return (
         <>
             <h1>Add or remove favorite smoothies!</h1><div className='item-container'>
-                {Object.keys(smoothies).map((smoothie) => (
+                {Object.keys(smoothies_states).map((smoothie) => (
                     <div className='card'>
-                        <h3> <button id={smoothie} onClick={() => {addOrRemoveFavorite(smoothie);}}>{smoothies[smoothie] ? "Remove favorite" : "Add favorite"}</button> {smoothie} </h3>
+                        <h3> <button id={smoothie} onClick={() => {addOrRemoveFavorite(smoothie);}}>{smoothies_states[smoothie] ? "Remove favorite" : "Add favorite"}</button> {smoothie} </h3>
                     </div>
                 ))}
             </div>
