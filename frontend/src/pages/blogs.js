@@ -16,7 +16,9 @@ const Blogs = () => {
         if (loggedInUser) {
             setUserid(loggedInUser);
         }
-        console.log("Called from useeffect: " + userid)
+        console.log("Called from useeffect: " + userid);
+        console.log(typeof userid);
+        console.log(userid.length);
     }, [userid]);
 
     
@@ -52,7 +54,20 @@ const Blogs = () => {
         
 
     }
+    if (userid.length === 0) {
+        return (
+            <>
+                <div>
+                    <div className="card">
+                        <body>
+                            You must sign in to add favorites!
+                        </body>
 
+                    </div>
+                </div>
+            </>
+        );
+    }
     return (
         <>
             <h1>You can write your blogs!</h1><div className='item-container'>
