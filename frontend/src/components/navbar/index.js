@@ -11,8 +11,8 @@ const Navbar = () => {
           <NavLink to="/" activeStyle>
             Home
           </NavLink>
-          <NavLink to="/blogs" activeStyle>
-            Blogs
+          <NavLink to="/addremovefavorites" activeStyle>
+            Add/Remove Favorites
           </NavLink>
           <NavLink to="/allSmoothies" activeStyle>
             All Smoothies

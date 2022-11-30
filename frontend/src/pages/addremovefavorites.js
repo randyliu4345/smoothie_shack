@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const Blogs = () => {
+const AddRemoveFavorites = () => {
     const [smoothies, setSmoothies] = useState({});
     const [userid, setUserid] = useState("");
 
@@ -105,4 +105,4 @@ const Blogs = () => {
     );
 };
 
-export default Blogs;
+export default AddRemoveFavorites;
