@@ -11,6 +11,9 @@ const Navbar = () => {
           <NavLink to="/" activeStyle>
             Home
           </NavLink>
+          <NavLink to="/trending" activeStyle>
+            Trending Smoothies
+          </NavLink>
           <NavLink to="/addremovefavorites" activeStyle>
             Add/Remove Favorites
           </NavLink>

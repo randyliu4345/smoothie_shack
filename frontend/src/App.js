@@ -12,6 +12,7 @@ import AllSmoothies from './pages/allsmoothies';
 import AddSmoothies from './pages/addsmoothies';
 import Login from './pages/login';
 import Favorites from './pages/favorites';
+import Trending from './pages/trending';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/about' element={<About />} />
         <Route path='/favorites' element={<Favorites />} />
+        <Route path='/trending' element={<Trending />} />
       </Routes>
     </Router>
   );
