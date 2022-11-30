@@ -52,3 +52,32 @@ p {
 html {
     background-color: #FCEEFE
 }
+
+button {
+    margin: 8px;
+    pointer-events: auto;
+    border-color:rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    background: #f54646;
+    border: none;
+    padding: 1.5rem 3rem;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+}
+
+button::before,
+button::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+button:hover{
+    background: #f7aeae;
+}

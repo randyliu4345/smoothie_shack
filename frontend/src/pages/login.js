@@ -99,7 +99,7 @@ function Login() {
         console.log("LOGOUT")
         setIsSubmitted(false);
         return (<div>
-            <div>You have successfully logged out</div>
+            <div>You have successfully logged out.</div>
         </div >
         )
     };
@@ -107,11 +107,13 @@ function Login() {
 
     if (userInfo && (userInfo !== null)&& (typeof userInfo.name !== 'undefined') && (userInfo.name.length !== 0)) {
         return (
-            <div><div>{userInfo.name} is loggged in</div>
+            <div><div className="card"><body>{userInfo.name} is loggged in!</body></div>
+                
                 <button onClick={() => {
                     handleLogout();
 
-                }}>logout</button>
+                    }}>logout</button>
+                
             </div>
         );
     }
@@ -142,7 +144,7 @@ function Login() {
         <div className="app">
             <div className="login-form">
                 <div className="title">Login</div>
-                {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+                {isSubmitted ? <div>User is successfully logged in.</div> : renderForm}
             </div>
         </div>
     );

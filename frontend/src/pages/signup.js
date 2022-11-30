@@ -83,7 +83,7 @@ const SignUp = () => {
         console.log("LOGOUT")
         setIsSubmitted(false);
         return (<div>
-            <div>You have successfully logged out</div>
+            <div>You have successfully logged out.</div>
             </div >
         )
     };
@@ -91,7 +91,7 @@ const SignUp = () => {
 
     if (users && (users !== null) && (users.length !== 0)) {
         return (
-            <div><div>{users} is loggged in</div>
+            <div><div>{users} is loggged in!</div>
                 <button onClick={() => {
                     handleLogout();
 
