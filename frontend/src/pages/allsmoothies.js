@@ -7,6 +7,25 @@ const AllSmoothies = () => {
     const [smoothies, setSmoothies] = useState([]);
     const [sortType, setSortType] = useState("");
 
+    const sortArray = type => {
+        const types = {
+        name: 'name',
+        calories: 'calories',
+        protein: 'protein',
+        rcalories: 'calories',
+        rprotein: 'protein'
+        };
+        const sortProperty = types[type];
+        if(sortProperty === 'name'){
+            var sorted = [...smoothiesUnsorted].sort((a, b) => (a[sortProperty] < b[sortProperty] ? -1 : 1));
+        }else if(type === 'calories' | type === 'protein'){
+            sorted = [...smoothiesUnsorted].sort((a, b) => b[sortProperty] - a[sortProperty]);
+        }else{
+            sorted = [...smoothiesUnsorted].sort((a, b) => a[sortProperty] - b[sortProperty]);
+        }
+        setSmoothies(sorted);
+    };
+
     const fetchSmoothies = () => {
         axios
             .get('http://localhost:5000/smoothie_shack')
@@ -21,33 +40,21 @@ const AllSmoothies = () => {
 
     useEffect(() => {
         fetchSmoothies();
-        const sortArray = type => {
-            const types = {
-            name: 'name',
-            calories: 'calories',
-            protein: 'protein',
-            rcalories: 'calories',
-            rprotein: 'protein'
-            };
-            const sortProperty = types[type];
-            if(sortProperty === 'name'){
-                var sorted = [...smoothiesUnsorted].sort((a, b) => (a[sortProperty] < b[sortProperty] ? -1 : 1));
-            }else if(type === 'calories' | type === 'protein'){
-                sorted = [...smoothiesUnsorted].sort((a, b) => b[sortProperty] - a[sortProperty]);
-            }else{
-                sorted = [...smoothiesUnsorted].sort((a, b) => a[sortProperty] - b[sortProperty]);
-            }
-            setSmoothies(sorted);
-        };
+    },[])
+
+    useEffect(() => {
+        setSmoothies(smoothiesUnsorted);
+    },[smoothiesUnsorted])
+
+    useEffect(() => {
         sortArray(sortType);
     },[sortType]); 
 
     
     return (
         <>
-            <h1>All our smoothies!</h1>
-            <br></br>
-            <h2>Sort</h2>
+            <h1>All of our smoothies!</h1>
+
             <select onChange={(e) => setSortType(e.target.value)}> 
                 <option value={sortType}>Select Sort Type</option>
                 <option value="name">Name</option>
@@ -60,7 +67,7 @@ const AllSmoothies = () => {
             <div className='item-container'>
                 {smoothies.map((smoothie) => (
                     <div className='card'>
-                        <h2>Name: {smoothie.name}</h2>
+                        <h2>{smoothie.name}</h2>
                         <h3>Ingredients: {smoothie.ingredients}</h3>
                         <h3>Calories: {smoothie.calories}</h3>
                         <h3>Protein(g): {smoothie.protein}</h3>
