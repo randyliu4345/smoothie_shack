@@ -107,7 +107,7 @@ function Login() {
 
     if (userInfo && (userInfo !== null)&& (typeof userInfo.name !== 'undefined') && (userInfo.name.length !== 0)) {
         return (
-            <div><div className="card"><body>{userInfo.name} is loggged in!</body></div>
+            <div><div className="card"><body>{userInfo.name} is logged in!</body></div>
                 
                 <button onClick={() => {
                     handleLogout();
