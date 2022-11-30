@@ -118,7 +118,7 @@ const Home = () => {
                     smoothies.map((smoothie) => (
                         <div className='card'>
                             <body>
-                            <h2>Name: {smoothie.name}</h2>
+                            <h2>{smoothie.name}</h2>
                             <h3>Ingredients: {smoothie.ingredients}</h3>
                             <h3>Calories: {smoothie.calories}</h3>
                             <h3>Protein(g): {smoothie.protein}</h3>
@@ -155,12 +155,11 @@ const Home = () => {
                 smoothies.map((smoothie) => (
                     <div className='card'>
                         <body>
-                        <h3> <button id={smoothie.name} onClick={() => {addOrRemoveFavorite(smoothie.name);}}>{smoothies_states[smoothie.name] ? "Remove favorite" : "Add favorite"}</button></h3>
                         <h2>Name: {smoothie.name}</h2>
                         <h3>Ingredients: {smoothie.ingredients}</h3>
                         <h3>Calories: {smoothie.calories}</h3>
                         <h3>Protein(g): {smoothie.protein}</h3>
-                            <br></br>
+                        <h3> <button id={smoothie.name} onClick={() => {addOrRemoveFavorite(smoothie.name);}}>{smoothies_states[smoothie.name] ? "Remove favorite" : "Add favorite"}</button></h3>
                         </body>
                     </div>
                 )) : null}
