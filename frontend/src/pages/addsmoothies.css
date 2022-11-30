@@ -1,0 +1,14 @@
+.card3 {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    border: 3px red solid;
+    width: 90%;
+    border-radius: 10px;
+    background-color: #F4FEEE
+}
+
+/* On mouse-over, add a deeper shadow */
+.card3:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}

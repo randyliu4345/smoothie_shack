@@ -17,11 +17,11 @@ const Navbar = () => {
           <NavLink to="/allSmoothies" activeStyle>
             All Smoothies
           </NavLink>
+          <NavLink to="/addSmoothies" activeStyle>
+            Add Smoothies
+          </NavLink>
           <NavLink to="/about" activeStyle>
             About
-          </NavLink>
-          <NavLink to="/contact" activeStyle>
-            Contact Us
           </NavLink>
           <h1>&emsp;&emsp;</h1>
           <NavLink to="/login" activeStyle>
