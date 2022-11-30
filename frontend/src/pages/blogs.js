@@ -3,12 +3,13 @@ import axios from 'axios';
 
 
 const Blogs = () => {
-    const [smoothies, setSmoothies] = useState([]);
+    const [smoothies, setSmoothies] = useState({});
     const [userid, setUserid] = useState("");
-    
+
     useEffect(() => {
         fetchSmoothies();
     }, []);
+
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("users");
@@ -24,11 +25,32 @@ const Blogs = () => {
     
 
     const fetchSmoothies = () => {
-        axios
-            .get('http://localhost:5000/smoothie_shack')
+
+            var userfavs;
+            axios
+            .get('http://localhost:5000/users')
+            .then((res) => {
+                var users = Array.from(res.data);
+                for (let i = 0; i < users.length; i++) {
+                    if (users[i].user == localStorage.getItem("users")) {
+                        userfavs = Array.from(users[i].fav)
+                    }
+                }
+                return axios.get('http://localhost:5000/smoothie_shack')
+            })
             .then((res) => {
                 // console.log(res.data);
-                setSmoothies(res.data);
+                var smoothiesArray = res.data;
+                var smoothiesMap = {};
+                smoothiesArray.forEach(smoothie => {
+                    smoothiesMap[smoothie.name] = false;
+                })
+                console.log(userfavs)
+                userfavs.forEach(fav => {
+                    smoothiesMap[fav] = true;
+                })
+                // console.log(smoothiesMap)
+                setSmoothies(smoothiesMap);
             })
             .catch((err) => {
                 console.log(err);
@@ -37,6 +59,8 @@ const Blogs = () => {
 
     const addOrRemoveFavorite = (smoothieName) => {
         var smoothie_button = document.getElementById(smoothieName);
+        // console.log(smoothie_button)
+        // console.log(smoothie_button.innerHTML)
         if (smoothie_button.innerHTML === "Add favorite")
         {
             smoothie_button.innerHTML = "Remove favorite";
@@ -70,13 +94,12 @@ const Blogs = () => {
     }
     return (
         <>
-            <h1>You can write your blogs!</h1><div className='item-container'>
-                {smoothies.map((smoothie) => (
+            <h1>Add or remove favorite smoothies!</h1><div className='item-container'>
+                {Object.keys(smoothies).map((smoothie) => (
                     <div className='card'>
-                        <h3> <button id={smoothie.name} onClick={() => {addOrRemoveFavorite(smoothie.name);}}>Add favorite</button> {smoothie.name} </h3>
+                        <h3> <button id={smoothie} onClick={() => {addOrRemoveFavorite(smoothie);}}>{smoothies[smoothie] ? "Remove favorite" : "Add favorite"}</button> {smoothie} </h3>
                     </div>
                 ))}
-                
             </div>
         </>
     );
