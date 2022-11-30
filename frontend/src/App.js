@@ -11,6 +11,7 @@ import Contact from './pages/contact';
 import AllSmoothies from './pages/allsmoothies';
 import AddSmoothies from './pages/addsmoothies';
 import Login from './pages/login';
+import Favorites from './pages/favorites';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/addsmoothies' element={<AddSmoothies />} /> 
         <Route path='/login' element={<Login />} />
         <Route path='/about' element={<About />} />
+        <Route path='/favorites' element={<Favorites />} />
       </Routes>
     </Router>
   );
