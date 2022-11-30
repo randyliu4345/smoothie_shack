@@ -53,7 +53,7 @@ const AddSmoothies = () => {
             });
             */
 
-        sendSmoothie(smoothiename.value, ingredients.value, caloriecount.value, proteincount.value);
+        sendSmoothie(smoothiename.value, ingredients.value, parseFloat(caloriecount.value), parseFloat(proteincount.value));
 
         
     };

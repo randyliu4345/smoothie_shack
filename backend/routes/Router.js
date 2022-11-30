@@ -153,6 +153,28 @@ Router.route("/signup").post(function (req, res) {
     });
 });
 
+
+Router.route("/addsmoothies").post(function (req, res) {
+  const dbConnect = dbo.getDb();
+  const smoothieInfo = {
+    name: req.body.name,
+    ingredients: req.body.ingredients,
+    calories: req.body.calories,
+    protein: req.body.protein
+  };
+
+  dbConnect
+    .collection("smoothies")
+    .insertOne(smoothieInfo, function (err, result) {
+      if (err) {
+        res.status(400).send("Error inserting smoothie!");
+      } else {
+        console.log(`Added a new match with id ${result.insertedId}`);
+        res.status(204).send();
+      }
+    });
+});
+
 /*
 // This section will help you create a new document.
 Router.route("/listings/recordSwipe").post(function (req, res) {
