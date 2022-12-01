@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from 'axios';
 import './addsmoothies.css'
 
 const AddSmoothies = () => {
+    const [errorMessages, setErrorMessages] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const sendSmoothie = (inName, inIngredients, inCalories, inProtein) => {   
+    const sendSmoothie = (inName, inIngredients, inCalories, inProtein, inFrequency) => {   
         axios
-            .post('http://localhost:5000/addSmoothies', {name:inName, ingredients:inIngredients, calories:inCalories, protein:inProtein})
+            .post('http://localhost:5000/addSmoothies', {name:inName, ingredients:inIngredients, calories:inCalories, protein:inProtein, frequency:inFrequency})
             .then((res) => {
                 console.log(inName);
                 console.log(inIngredients);
@@ -21,46 +23,39 @@ const AddSmoothies = () => {
             });
     };
 
+    const errors = {
+        invalidnumber: "Please input a valid number for nutritional data.",
+        none: ""
+    };
+
+    const renderErrorMessage = (name) =>
+        name === errorMessages.name && (
+            <div className="error">{errorMessages.message}</div>
+        );
+
     const handleSubmit = (event) => {
         //Prevent page reload
-        //event.preventDefault();
+        event.preventDefault();
         
         var { smoothiename, ingredients, caloriecount, proteincount } = document.forms[0];
 
-
-        //Before we send, check if its already taken
-        /*
-        axios
-            .get('http://localhost:5000/users')
-            .then((res) => {
-                console.log(Array.from(res))
-                const item = Array.from(res.data).find(item => item.user === uname.value)
-                if (typeof item !== 'undefined') { //we found that user
-                    setErrorMessages({ name: "uname", message: errors.uname });
-                    console.log("UNDEFINED USERNAME");
-                    setIsSubmitted(false);
-                    setErrorMessages({ name: "uname", message: errors.uname });
-
-                } else { //we didnt find that user
-                    sendUser(uname.value, pass.value);
-                    setIsSubmitted(true);
-                }
-
-            })
-            .catch((err) => {
-                console.log(err);
-
-            });
-            */
-
-        sendSmoothie(smoothiename.value, ingredients.value, parseFloat(caloriecount.value), parseFloat(proteincount.value));
-
+        
+        if(isNaN(parseFloat(caloriecount.value)) || isNaN(parseFloat(proteincount.value))) {
+            setErrorMessages({ name: "invalidnumber", message: errors.invalidnumber });
+            setIsSubmitted(false);
+        }
+        else {
+            sendSmoothie(smoothiename.value, ingredients.value, parseFloat(caloriecount.value), parseFloat(proteincount.value), 0);
+            document.getElementById("smoothieForm").reset();
+            setErrorMessages({ name: "invalidnumber", message: errors.none });
+            setIsSubmitted(true);
+        }
         
     };
 
     const renderForm = (
         <div className="form">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id="smoothieForm">
                 <div className="input-container">
                     <label>Name of Smoothie </label>
                     <input type="text" name="smoothiename" required />
@@ -80,6 +75,8 @@ const AddSmoothies = () => {
                 <div className="button-container">
                     <input type="submit" />
                 </div>
+
+                {renderErrorMessage("invalidnumber")}
             </form>
         </div>
     );
@@ -98,6 +95,10 @@ const AddSmoothies = () => {
 
             {renderForm}
 
+            <br></br>
+            
+            {isSubmitted ? <p style={{color:"MediumSeaGreen"}}>Your smoothie was successfully submitted. Go check it out!</p> : ""}
+            
             <br></br>
         </div>
 

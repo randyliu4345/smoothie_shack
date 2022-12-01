@@ -7,7 +7,7 @@ const Navbar = () => {
     <>
       <Nav>
         <NavMenu>
-        <h1>Randy's Smoothie Shack&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+        <h1>Randy's Smoothie Shack&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
           <NavLink to="/" activeStyle>
             Home
           </NavLink>
