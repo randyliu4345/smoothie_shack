@@ -160,7 +160,8 @@ Router.route("/addsmoothies").post(function (req, res) {
     name: req.body.name,
     ingredients: req.body.ingredients,
     calories: req.body.calories,
-    protein: req.body.protein
+    protein: req.body.protein,
+    frequency: req.body.frequency
   };
 
   dbConnect
