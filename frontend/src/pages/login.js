@@ -10,13 +10,11 @@ function Login() {
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("users");
-        console.log("Users =")
-        console.log(loggedInUser)
+
         if (loggedInUser) {
-            console.log(loggedInUser);
-            console.log("HIN HERE");
+
             setUserInfo({ name: loggedInUser });
-            console.log("Found user " + { loggedInUser});
+
 
         }
     }, []);
@@ -41,7 +39,6 @@ function Login() {
         axios
             .get('http://localhost:5000/users')
             .then((res) => {
-                console.log(Array.from(res))
                 const item = Array.from(res.data).find(item => item.user === uname.value)
                 /*
                 console.log(item)
@@ -54,11 +51,9 @@ function Login() {
                     pass: item.pass
 
                 });*/
-                console.log("type of user name");
-                console.log(typeof userInfo.name);
                 if (typeof item === 'undefined') { //we didnt find that user
                     setErrorMessages({ name: "uname", message: errors.uname });
-                    console.log("UNDEFINED USERNAME");
+
                     setIsSubmitted(false);
                     setUserInfo({
                         name: [],
@@ -81,7 +76,7 @@ function Login() {
                         pass: item.pass
 
                     });
-                    console.log("WE LOGGED IN");
+
                 }
             })
             .catch((err) => {
@@ -96,7 +91,7 @@ function Login() {
     const handleLogout = () => {
         setUserInfo([]);
         localStorage.clear();
-        console.log("LOGOUT")
+ 
         setIsSubmitted(false);
         return (<div>
             <div>You have successfully logged out.</div>

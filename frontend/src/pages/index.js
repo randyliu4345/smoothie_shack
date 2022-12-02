@@ -25,17 +25,14 @@ const Home = () => {
 
     useEffect(() => {
         fetchSmoothies();
-        console.log("fetchSmoothies called from useEffect")
     }, []);
 
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("users");
-        console.log("useEffect called");
         if (loggedInUser) {
             setUserid(loggedInUser);
         }
-        console.log("Called from useeffect: " + userid);
         // console.log(typeof userid);
         // console.log(userid.length);
     }, [userid]);
@@ -65,7 +62,7 @@ const Home = () => {
                 smoothiesArray.forEach(smoothie => {
                     smoothiesMap[smoothie.name] = false;
                 })
-                console.log(userfavs)
+
                 userfavs.forEach(fav => {
                     smoothiesMap[fav] = true;
                 })

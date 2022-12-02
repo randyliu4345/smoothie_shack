@@ -6,15 +6,13 @@ const SignUp = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const [users, setUsers] = useState([]);
-    
 
-    const sendUser = (inUser, inPass) => {   
+
+    const sendUser = (inUser, inPass) => {
         axios
-            .post('http://localhost:5000/signUp', {user:inUser, pass:inPass, fav: []})
+            .post('http://localhost:5000/signUp', { user: inUser, pass: inPass, fav: [] })
             .then((res) => {
-                console.log(inUser)
-                console.log(inPass);
-                console.log("DATA")
+
                 setUsers(inUser, inPass);
                 localStorage.setItem('users', inUser)
             })
@@ -23,15 +21,14 @@ const SignUp = () => {
             });
     };
 
-    
+
     // User Login info
     useEffect(() => {
         const loggedInUser = localStorage.getItem("users");
-        console.log("Users =")
-        console.log(loggedInUser)
+
         if (loggedInUser) {
             const foundUser = (loggedInUser);
-            console.log("WE HAVE A USER ALREADY LOGGED IN!");
+
             setUsers(foundUser);
         }
     }, []);
@@ -42,7 +39,7 @@ const SignUp = () => {
     const handleSubmit = (event) => {
         //Prevent page reload
         event.preventDefault();
-        
+
         var { uname, pass } = document.forms[0];
 
 
@@ -50,11 +47,10 @@ const SignUp = () => {
         axios
             .get('http://localhost:5000/users')
             .then((res) => {
-                console.log(Array.from(res))
+
                 const item = Array.from(res.data).find(item => item.user === uname.value)
                 if (typeof item !== 'undefined') { //we found that user
                     setErrorMessages({ name: "uname", message: errors.uname });
-                    console.log("UNDEFINED USERNAME");
                     setIsSubmitted(false);
                     setErrorMessages({ name: "uname", message: errors.uname });
 
@@ -68,7 +64,7 @@ const SignUp = () => {
                 console.log(err);
 
             });
-        
+
     };
 
     // Generate JSX code for error message
@@ -80,11 +76,10 @@ const SignUp = () => {
     const handleLogout = () => {
         setUsers(false);
         localStorage.clear();
-        console.log("LOGOUT")
         setIsSubmitted(false);
         return (<div>
             <div>You have successfully logged out.</div>
-            </div >
+        </div >
         )
     };
     // if there's a user show the message below
@@ -119,7 +114,7 @@ const SignUp = () => {
             </form>
         </div>
     );
-            
+
     return (
         <div className="app">
             <div className="login-form">
