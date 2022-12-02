@@ -4,7 +4,7 @@ import './generalStyles.css'
 
 const Home = () => {
     const [smoothies, setSmoothies] = useState([]);
-    const [query, setQuery] = useState(" ")
+    const [query, setQuery] = useState("")
     const [smoothies_states, setSmoothieStates] = useState({});
     const [userid, setUserid] = useState("");
 
